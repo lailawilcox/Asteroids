@@ -2,12 +2,16 @@ class Spaceship extends GameObject {
 
   //instance variables
   int cooldown;
+  int invincibilityTimer;
 
   //constructor
   Spaceship() {
     super(width/2, height/2, 0, 0, 0.1, 0);
     direction = new PVector(0.1, 0);
     cooldown = 0;
+    invincibilityTimer = 0;
+    diameter = 50; // For collision detection
+    lives = 10; // Player starts with 3 lives
   }
 
   //behaviour functions
@@ -37,7 +41,18 @@ class Spaceship extends GameObject {
 
   void move() {
     location.add(velocity);
-    if (upkey) velocity.add(direction);
+
+    // Apply friction to slow down
+    velocity.mult(0.98);
+
+    if (upkey) {
+      velocity.add(direction);
+      // Limit maximum speed
+      if (velocity.mag() > 5) {
+        velocity.setMag(5);
+      }
+    }
+
     if (leftkey) direction.rotate(-radians(3));
     if (rightkey) direction.rotate(radians(3));
   }
