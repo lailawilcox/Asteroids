@@ -10,8 +10,8 @@ class Spaceship extends GameObject {
     direction = new PVector(0.1, 0);
     cooldown = 0;
     invincibilityTimer = 0;
-    diameter = 50; // For collision detection
-    lives = 10; // Player starts with 3 lives
+    diameter = 50;
+    lives = 3;
   }
 
   //behaviour functions
@@ -28,22 +28,24 @@ class Spaceship extends GameObject {
     scale(0.3);
     image(SpaceShip, 0, 0);
     popMatrix();
-    noFill();
-    rect(0, 0, 80, 50);
+    
+    //Debug collision box
+    //noFill();
+    //rect(0, 0, 80, 50);
   }
 
   void act() {
     move();
     shoot();
     checkForCollisions();
-    wrapAround();
+    wrapAround(50);
   }
 
   void move() {
     location.add(velocity);
 
     // Apply friction to slow down
-    velocity.mult(0.98);
+    velocity.mult(0.99);
 
     if (upkey) {
       velocity.add(direction);

@@ -38,7 +38,7 @@ boolean playerWon = false;
 
 void setup() {
   mode = 0;
-  size(800, 600);
+  size(1000, 600);
   textAlign(CENTER, CENTER);
   imageMode(CENTER);
   rectMode(CENTER);

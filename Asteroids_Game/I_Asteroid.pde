@@ -38,13 +38,13 @@ class Asteroid extends GameObject {
     angle += rotationSpeed;
 
     //Debug collision circle
-    noFill();
-    circle(location.x, location.y, diameter);
+    //noFill();
+    //circle(location.x, location.y, diameter);
   }
 
   void act() {
     location.add(velocity);
-    wrapAround();
+    wrapAround(100);
     checkForCollisions();
   }
 

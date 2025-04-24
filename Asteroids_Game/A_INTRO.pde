@@ -38,6 +38,6 @@ void startGameButton() {
   textSize(50);
   stroke(white);
   noFill();
-  drawSquareButton(width/2, height/2-20, 250, 80, 5, 8, 4);
+  drawSquareButton(width/2, height/2-20, 250, 80, 15, 6, 3);
   text("Start", width/2, height/2-20);
 }

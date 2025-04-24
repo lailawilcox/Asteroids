@@ -1,47 +1,58 @@
 void pause() {
-  darkBackground();
-  playButton();
-  introButton();
+  image(Background, width/2, height/2);
+  drawObjects();
+  transparentBackground();
   resumeButton();
+  introButton();
 }
 
 void pauseClicks() {
-  if (mouseX < (width-35)+30/2 && mouseX > (width-35)-30/2 && mouseY < 35+30/2 && mouseY > 35-30/2) {
-    mode = 1;
+  // resume button
+  if (mouseX < (width/2)+250/2 && mouseX > (width/2)-250/2 && mouseY < (height/2-50)+70/2 && mouseY > (height/2-50)-70/2) {
+    mode = GAME;
+  }
+
+  //intro button
+  if (mouseX < (width/2)+200/2 && mouseX > (width/2)-200/2 && mouseY < (height/2+50)+70/2 && mouseY > (height/2+50)-70/2) {
+    mode = INTRO;
   }
 }
 
 //------------------------------------------------------------------------------------------------------------------------
 
-void playButton() {
-  fill(black);
-  stroke(black);
-  rect(width-35, 35, 32, 32);
-  stroke(white);
-  drawSquareButton(width-35, 35, 30, 30, 2, 4, 2);
-  strokeWeight(2);
+void drawObjects() {
+  for (GameObject obj : objects) {
+    obj.show();
+  }
+}
+
+void transparentBackground() {
+  fill(0, 150);
+  noStroke();
+  rect(width/2, height/2, width, height);
+}
+
+void pauseText() {
+  textFont(Font);
   fill(white);
-  triangle(width-39, 41, width-39, 29, width-31, 35);
+  textSize(80);
+  text("PAUSED", width/2, height/3);
+}
+
+
+void resumeButton() {
+  textSize(40);
+  fill(black, 200);  // Semi-transparent black fill
+  stroke(white);
+  drawSquareButton(width/2, height/2-50, 250, 70, 10, 4, 2);
+  fill(white);
+  text("Resume", width/2, height/2-50);
 }
 
 void introButton() {
-  textSize(30);
+  fill(black, 200);  // Semi-transparent black fill
   stroke(white);
-  fill(black);
-  drawSquareButton(width/2, (height/2)+50, 120, 50, 5, 4, 2);
-  text("Intro", width/2, (height/2)+50);
-}
-
-void resumeButton() {
-  textSize(30);
-  stroke(white);
-  fill(black);
-  drawSquareButton(width/2, (height/2)-50, 150, 50, 5, 4, 2);
-  text("Resume", width/2, (height/2)-50);
-}
-
-void darkBackground() {
-  fill(black, 5);
-  noStroke();
-  rect(width/2, height/2, width, height);
+  drawSquareButton(width/2, height/2+50, 200, 70, 10, 4, 2);
+  fill(white);
+  text("Intro", width/2, height/2+50);
 }

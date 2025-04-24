@@ -38,10 +38,10 @@ class GameObject {
   void show() {
   }
 
-  void wrapAround() {
-    if (location.x < 0) location.x = width;
-    if (location.x > width) location.x = 0;
-    if (location.y < 0) location.y = height;
-    if (location.y > height) location.y = 0;
+  void wrapAround(int add) {
+    if (location.x < 0-add) location.x = width+add;
+    if (location.x > width+add) location.x = 0-add;
+    if (location.y < 0-add) location.y = height+add;
+    if (location.y > height+add) location.y = 0-add;
   }
 }
