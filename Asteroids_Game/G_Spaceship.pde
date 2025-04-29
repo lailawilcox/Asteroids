@@ -19,19 +19,34 @@ class Spaceship extends GameObject {
     pushMatrix();
     translate(location.x, location.y);
     rotate(direction.heading());
-    drawShip();
+
+    // Blink if invincible
+    if (invincibilityTimer > 0) {
+      if (frameCount % 10 < 5) {
+        drawShip();
+      }
+    } else {
+      drawShip();
+    }
     popMatrix();
   }
 
   void drawShip() {
     pushMatrix();
     scale(0.3);
+    // Change ship appearance when invincible
+    if (invincibilityTimer > 0) {
+      tint(white, 200);
+    } else {
+      noTint();
+    }
     image(SpaceShip, 0, 0);
     popMatrix();
-    
+
     //Debug collision box
     //noFill();
     //rect(0, 0, 80, 50);
+    noTint();
   }
 
   void act() {
@@ -39,6 +54,10 @@ class Spaceship extends GameObject {
     shoot();
     checkForCollisions();
     wrapAround(50);
+
+    if (invincibilityTimer > 0) {
+      invincibilityTimer--;
+    }
   }
 
   void move() {
@@ -68,5 +87,27 @@ class Spaceship extends GameObject {
   }
 
   void checkForCollisions() {
+    int i = 0;
+    while (i < objects.size()) {
+      GameObject obj = objects.get(i);
+
+      // Check collision with asteroid
+      if (obj instanceof Asteroid) {
+        if (circleRect(obj.location.x, obj.location.y, obj.diameter/2, location.x, location.y, 40, 25) && invincibilityTimer <= 0) {
+          loseLife();
+        }
+      }
+      i++;
+    }
+  }
+
+
+  void loseLife() {
+    lives--;
+    invincibilityTimer = 200;
+
+    if (lives <= 0) {
+      lives = 0;
+    }
   }
 }

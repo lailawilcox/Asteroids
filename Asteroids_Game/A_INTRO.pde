@@ -7,6 +7,7 @@ void intro() {
 void introClicks() {
   if (mouseX < (width/2)+250/2 && mouseX > (width/2)-250/2 && mouseY < (height/2-20)+80/2 && mouseY > (height/2-20)-80/2) {
     mode = 1;
+   initializeGame();
   }
 }
 

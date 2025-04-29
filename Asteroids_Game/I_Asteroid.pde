@@ -55,14 +55,12 @@ class Asteroid extends GameObject {
 
       // Check collision with bullets
       if (obj instanceof Bullet) {
-        Bullet bullet = (Bullet)obj;
 
         if (circleRect(location.x, location.y, diameter/2, obj.location.x, obj.location.y, obj.diameter*3, obj.diameter)) {
           // Split asteroid if it's not the smallest size
           if (lives > 1) {
-            for (int j = 0; j < 2; j++) {
-              objects.add(new Asteroid(location.x, location.y, lives-1));
-            }
+            objects.add(new Asteroid(location.x, location.y, lives-1));
+            objects.add(new Asteroid(location.x, location.y, lives-1));
           }
           // Add points based on asteroid size
           score += (4 - lives) * 100;
