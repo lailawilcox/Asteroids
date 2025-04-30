@@ -26,6 +26,13 @@ void gameEngine() {
       i++;
     }
   }
+  
+  if (player1.lives == 0) {
+    mode = 3;
+    if (score > highScore) {
+      highScore = score;
+    }
+  }
 }
 
 void pauseButton() {

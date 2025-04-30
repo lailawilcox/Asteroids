@@ -18,10 +18,12 @@ class Asteroid extends GameObject {
   }
 
   // Constructor for smaller asteroids
-  Asteroid(float x, float y, int l) {
+  Asteroid(float x, float y, int l, Bullet sourceBullet) {
     super(x, y, 1, 1);
-    velocity.setMag(random(2, 4)); // Smaller asteroids move faster
-    velocity.rotate(random(TWO_PI));
+    PVector awayDir = new PVector(x - sourceBullet.location.x, y - sourceBullet.location.y);
+    velocity = awayDir.copy();
+    velocity.rotate(random(-PI/3, PI/3));
+    velocity.setMag(random(2, 4));
     lives = l;
     diameter = lives*45;
     rotationSpeed = random(-3, 3); // Smaller asteroids rotate faster
@@ -38,13 +40,13 @@ class Asteroid extends GameObject {
     angle += rotationSpeed;
 
     //Debug collision circle
-    //noFill();
-    //circle(location.x, location.y, diameter);
+    noFill();
+    circle(location.x, location.y, diameter);
   }
 
   void act() {
     location.add(velocity);
-    wrapAround(100);
+    wrapAround(diameter/2);
     checkForCollisions();
   }
 
@@ -55,12 +57,13 @@ class Asteroid extends GameObject {
 
       // Check collision with bullets
       if (obj instanceof Bullet) {
+        Bullet bullet = (Bullet)obj;
 
         if (circleRect(location.x, location.y, diameter/2, obj.location.x, obj.location.y, obj.diameter*3, obj.diameter)) {
           // Split asteroid if it's not the smallest size
           if (lives > 1) {
-            objects.add(new Asteroid(location.x, location.y, lives-1));
-            objects.add(new Asteroid(location.x, location.y, lives-1));
+            objects.add(new Asteroid(location.x, location.y, lives-1, bullet));
+            objects.add(new Asteroid(location.x, location.y, lives-1, bullet));
           }
           // Add points based on asteroid size
           score += (4 - lives) * 100;

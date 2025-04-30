@@ -22,7 +22,7 @@ class Spaceship extends GameObject {
 
     // Blink if invincible
     if (invincibilityTimer > 0) {
-      if (frameCount % 10 < 5) {
+      if (frameCount % 5 == 0) {
         drawShip();
       }
     } else {
@@ -44,8 +44,8 @@ class Spaceship extends GameObject {
     popMatrix();
 
     //Debug collision box
-    //noFill();
-    //rect(0, 0, 80, 50);
+    noFill();
+    rect(0, 0, 80, 50);
     noTint();
   }
 
@@ -80,7 +80,7 @@ class Spaceship extends GameObject {
 
   void shoot () {
     cooldown--;
-    if (spacekey && cooldown <= 0) {
+    if (spacekey && cooldown <= 0 && invincibilityTimer <= 0) {
       objects.add(new Bullet());
       cooldown = 30;
     }

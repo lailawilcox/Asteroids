@@ -18,12 +18,12 @@ class Bullet extends GameObject {
     popMatrix();
 
     //Debug collision box
-    //pushMatrix();
-    //translate(location.x, location.y);
-    //rotate(direction.heading());
-    //noFill();
-    //rect(0, 0, diameter*3, diameter);
-    //popMatrix();
+    pushMatrix();
+    translate(location.x, location.y);
+    rotate(direction.heading());
+    noFill();
+    rect(0, 0, diameter*3, diameter);
+    popMatrix();
   }
 
   void act() {

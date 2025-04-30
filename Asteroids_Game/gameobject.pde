@@ -38,7 +38,7 @@ class GameObject {
   void show() {
   }
 
-  void wrapAround(int add) {
+  void wrapAround(float add) {
     if (location.x < 0-add) location.x = width+add;
     if (location.x > width+add) location.x = 0-add;
     if (location.y < 0-add) location.y = height+add;
