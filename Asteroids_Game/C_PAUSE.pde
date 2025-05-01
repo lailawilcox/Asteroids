@@ -42,7 +42,7 @@ void pauseText() {
 
 void resumeButton() {
   textSize(40);
-  fill(black, 200);  // Semi-transparent black fill
+  fill(black, 200);
   stroke(white);
   drawSquareButton(width/2, height/2-50, 250, 70, 10, 4, 2);
   fill(white);
@@ -50,7 +50,7 @@ void resumeButton() {
 }
 
 void introButton() {
-  fill(black, 200);  // Semi-transparent black fill
+  fill(black, 200);
   stroke(white);
   drawSquareButton(width/2, height/2+50, 200, 70, 10, 4, 2);
   fill(white);

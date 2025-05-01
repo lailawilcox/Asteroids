@@ -2,6 +2,8 @@ void initializeGame() {
   objects = new ArrayList<GameObject>();
   player1 = new Spaceship();
   objects.add(player1);
+  ufo = new UFO();
+  objects.add(ufo);
 
   // Add initial asteroids
   for (int i = 0; i < initialAsteroids; i++) {
@@ -9,7 +11,8 @@ void initializeGame() {
   }
 
   score = 0;
-  playerWon = false;
+
+  ufoTimer = int(random(300, 600));
 }
 
 void drawSquareButton(float x, float y, float w, float h, float c, int on, int off) {

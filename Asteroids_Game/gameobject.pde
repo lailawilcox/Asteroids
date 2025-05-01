@@ -5,13 +5,20 @@ class GameObject {
   PVector direction;
   int lives;
   float diameter;
-  
+
+  //empty
+  GameObject() {
+    lives = 1;
+  }
+
+  //Asteroids
   GameObject(float lx, float ly, float vx, float vy) {
     location = new PVector(lx, ly);
     velocity = new PVector(vx, vy);
     lives = 1;
   }
 
+  //SpaceShip
   GameObject(float lx, float ly, float vx, float vy, float dx, float dy) {
     location = new PVector(lx, ly);
     velocity = new PVector(vx, vy);
@@ -19,17 +26,12 @@ class GameObject {
     lives = 1;
   }
 
+  //Bullets
   GameObject(PVector l, PVector v, PVector d) {
     direction = d;
     location = l;
     velocity = v;
     lives = 1;
-  }
-
-  GameObject(PVector l, PVector v, int li) {
-    location = l;
-    velocity = v;
-    lives = li;
   }
 
   void act() {

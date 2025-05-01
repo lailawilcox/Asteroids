@@ -11,7 +11,6 @@ class Asteroid extends GameObject {
     rotationSpeed = random(-2, 2);
     angle = 0;
 
-    // Don't spawn too close to player
     while (dist(location.x, location.y, width/2, height/2) < 200) {
       location = new PVector(random(width), random(height));
     }
@@ -26,7 +25,7 @@ class Asteroid extends GameObject {
     velocity.setMag(random(2, 4));
     lives = l;
     diameter = lives*45;
-    rotationSpeed = random(-3, 3); // Smaller asteroids rotate faster
+    rotationSpeed = random(-3, 3);
     angle = 0;
   }
 
@@ -65,10 +64,9 @@ class Asteroid extends GameObject {
             objects.add(new Asteroid(location.x, location.y, lives-1, bullet));
             objects.add(new Asteroid(location.x, location.y, lives-1, bullet));
           }
-          // Add points based on asteroid size
+
           score += (4 - lives) * 100;
 
-          // Remove asteroid and bullet
           lives = 0;
           obj.lives = 0;
         }

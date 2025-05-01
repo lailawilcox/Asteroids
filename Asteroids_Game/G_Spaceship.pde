@@ -54,10 +54,7 @@ class Spaceship extends GameObject {
     shoot();
     checkForCollisions();
     wrapAround(50);
-
-    if (invincibilityTimer > 0) {
-      invincibilityTimer--;
-    }
+    invincibility();
   }
 
   void move() {
@@ -86,6 +83,18 @@ class Spaceship extends GameObject {
     }
   }
 
+  void invincibility() {
+    if (invincibilityTimer > 0) {
+      invincibilityTimer--;
+    }
+  }
+
+  void loseLife() {
+    lives--;
+    invincibilityTimer = 200;
+  }
+
+
   void checkForCollisions() {
     int i = 0;
     while (i < objects.size()) {
@@ -98,16 +107,6 @@ class Spaceship extends GameObject {
         }
       }
       i++;
-    }
-  }
-
-
-  void loseLife() {
-    lives--;
-    invincibilityTimer = 200;
-
-    if (lives <= 0) {
-      lives = 0;
     }
   }
 }

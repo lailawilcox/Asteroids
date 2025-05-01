@@ -26,6 +26,7 @@ boolean upkey, downkey, leftkey, rightkey, spacekey, zkey;
 
 //Game Objects
 Spaceship player1;
+UFO ufo;
 
 //List of Game Objects
 ArrayList<GameObject> objects;
@@ -34,7 +35,7 @@ ArrayList<GameObject> objects;
 int score;
 int highScore = 0;
 int initialAsteroids = 4;
-boolean playerWon = false;
+int ufoTimer;
 
 void setup() {
   mode = 0;
@@ -50,10 +51,12 @@ void setup() {
   Bullet = loadImage("Bullet.png");
   Asteroid = loadImage("Asteroid.png");
   UFO = loadImage("UFO.png");
+  UFO.resize(100, 100);
 
   //Load fonts
   Font = createFont("Font", 40);
 
+  //initialize Game
   initializeGame();
 }
 
