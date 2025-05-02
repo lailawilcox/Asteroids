@@ -7,9 +7,10 @@ color white = #FFFFFF;
 //images
 PImage Background;
 PImage SpaceShip;
-PImage Bullet;
+PImage SpaceShipBullet;
 PImage Asteroid;
 PImage UFO;
+PImage UFOBullet;
 
 //Fonts
 PFont Font;
@@ -44,19 +45,22 @@ void setup() {
   imageMode(CENTER);
   rectMode(CENTER);
 
-  //Load images
+  //Load Images
   Background = loadImage("Background.png");
   Background.resize(width+200, height);
   SpaceShip = loadImage("SpaceShip.png");
-  Bullet = loadImage("Bullet.png");
+  SpaceShipBullet = loadImage("SpaceShipBullet.png");
+  SpaceShipBullet.resize(35, 30);
   Asteroid = loadImage("Asteroid.png");
   UFO = loadImage("UFO.png");
   UFO.resize(100, 100);
+  UFOBullet = loadImage("UFOBullet.png");
+  UFOBullet.resize(35, 35);
 
-  //Load fonts
+  //Load Fonts
   Font = createFont("Font", 40);
 
-  //initialize Game
+  //Initialize Game
   initializeGame();
 }
 

@@ -5,7 +5,7 @@ void gameOver() {
 }
 
 void gameOverClicks() {
-  //restart button
+  //Restart Button
   if (mouseX < (width/2)+250/2 && mouseX > (width/2)-250/2 && mouseY < (height/2+50)+80/2 && mouseY > (height/2+50)-80/2) {
     mode = 0;
     initializeGame();
@@ -22,14 +22,14 @@ void youLoseText() {
   textSize(100);
   text("GAMEOVER", width/2, height/4);
 
-  //Win/Lose Text
+  //Win or Lose Text
   stroke(white);
   fill(white);
   textSize(30);
   if (objects.size() == 1) {
     text("You Sucessfully Destroyed all the Asteroids and Enemy Ships", width/2, height/2-50, 600, 500);
   } else if (player1.lives == 0) {
-    text("Your Ship Was Destroyed by Asteroids", width/2, height/2-50);
+    text("Your Ship Was Destroyed", width/2, height/2-50);
   }
 
   //High score

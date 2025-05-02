@@ -7,7 +7,7 @@ void game() {
 }
 
 void gameClicks() {
-  //pause button
+  //Pause Button
   if (mouseX < (width-35)+30/2 && mouseX > (width-35)-30/2 && mouseY < 35+30/2 && mouseY > 35-30/2) {
     mode = 2;
   }
@@ -35,7 +35,7 @@ void gameEngine() {
     }
   }
 
-  // Update UFO timer
+  // Update UFO Timer
   ufoTimer--;
   if (ufoTimer <= 0) {
     objects.add(new UFO());
@@ -64,7 +64,7 @@ void gameEngine() {
 
   void scoreText() {
 
-    //grow box with score
+    //Grow Box with Score
     int w = 0;
     if (score >= 100) {
       w = w +25;

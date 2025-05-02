@@ -1,12 +1,17 @@
 class UFO extends GameObject {
-  int cooldown;
 
+  //Instance Variables
+  int cooldown;
+  float angle;
+
+  //Constructors
   UFO() {
     super(0, 0, 0, 0);
 
     diameter = 80;
-    lives = 1;
     cooldown = 60;
+    angle = 0;
+    lives = 1;
 
     int side = (int)random(0, 4);
 
@@ -35,15 +40,39 @@ class UFO extends GameObject {
       velocity.x = random(1, 3);
       velocity.y = 0;
     }
+
+    //Calculate where the UFO will Enter the Screen
+    float futureX = location.x + velocity.x * (diameter/velocity.mag());
+    float futureY = location.y + velocity.y * (diameter/velocity.mag());
+
+    //Check Distance to Player at the Point where the UFO Enters the Screen
+    while (dist(futureX, futureY, player1.location.x, player1.location.y) < 100) {
+      //Adjust Position Based on the Side
+      if (side == 0) {
+        location.x = random(width);
+      } else if (side == 1) {
+        location.y = random(height);
+      } else if (side == 2) {
+        location.x = random(width);
+      } else if (side == 3) {
+        location.y = random(height);
+      }
+
+      //Recalculate Future Position
+      futureX = location.x + velocity.x * (diameter/velocity.mag());
+      futureY = location.y + velocity.y * (diameter/velocity.mag());
+    }
   }
 
   void show() {
+    noTint();
     pushMatrix();
     translate(location.x, location.y);
+    rotate(angle);
     image(UFO, 0, 0);
     popMatrix();
 
-    // Debug collision circle
+    //Debug collision circle
     noFill();
     stroke(white);
     circle(location.x, location.y, diameter);
@@ -51,16 +80,28 @@ class UFO extends GameObject {
 
   void act() {
     move();
-    shoot();
+    updateAngle();
     checkForCollisions();
-
-
-
 
     cooldown--;
     if (cooldown <= 0) {
       shoot();
       cooldown = int(random(60, 120));
+    }
+  }
+
+  //------------------------------------------------------------------------------------------------------------------------
+
+  void updateAngle() {
+    // Find the player
+    for (GameObject obj : objects) {
+      if (obj instanceof Spaceship) {
+        //Calculate direction to player
+        float dirX = obj.location.x - location.x;
+        float dirY = obj.location.y - location.y;
+
+        angle = atan2(dirY, dirX);
+      }
     }
   }
 
@@ -72,31 +113,31 @@ class UFO extends GameObject {
     }
   }
 
-
-
   void shoot() {
-    for (GameObject obj : objects) {
-      if (obj instanceof Spaceship) {
-        // Calculate direction to player
-        PVector bulletDir = new PVector(obj.location.x - location.x, obj.location.y - location.y);
-        bulletDir.normalize();
-
-        // Create and store target direction to be used later
-        direction = bulletDir.copy();
-      }
-    }
+    PVector bulletDirection = new PVector(cos(angle), sin(angle));
+    objects.add(new Bullet(this.location.copy(), bulletDirection));
   }
-
 
   void checkForCollisions() {
     int i = 0;
     while (i < objects.size()) {
       GameObject obj = objects.get(i);
 
-      // Check collision with asteroid
+      //Check for Collision Between UFO and Asteroids
       if (obj instanceof Asteroid) {
-        if (dist(obj.location.x, obj.location.y, location.x, location.y) <= (obj.diameter/2)+(diameter/2) ) {
+        if (dist(obj.location.x, obj.location.y, location.x, location.y) <= (obj.diameter/2)+(diameter/2)+10) {
+          tint(white, 5);
+        }
+      }
+
+      //Check for Collisions Between UFO and Spaceship Bullets
+      if (obj instanceof Bullet) {
+        Bullet bullet = (Bullet)obj;
+        if (!bullet.isFromUFO && dist(obj.location.x, obj.location.y, location.x, location.y) <= (obj.diameter/2)+(diameter/2)) {
+          score += 500;
+
           lives = 0;
+          obj.lives = 0;
         }
       }
       i++;

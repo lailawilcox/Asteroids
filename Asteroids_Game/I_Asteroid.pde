@@ -1,7 +1,10 @@
 class Asteroid extends GameObject {
 
+  //Instance Variables
   float rotationSpeed, angle;
 
+  //Constructors
+  //Initial Asteroids
   Asteroid() {
     super(random(width), random(height), 1, 1);
     velocity.setMag(random(1, 3));
@@ -16,7 +19,7 @@ class Asteroid extends GameObject {
     }
   }
 
-  // Constructor for smaller asteroids
+  //Smaller Asteroids
   Asteroid(float x, float y, int l, Bullet sourceBullet) {
     super(x, y, 1, 1);
     PVector awayDir = new PVector(x - sourceBullet.location.x, y - sourceBullet.location.y);
@@ -30,6 +33,7 @@ class Asteroid extends GameObject {
   }
 
   void show() {
+    noTint();
     pushMatrix();
     translate(location.x, location.y);
     rotate(radians(angle));
@@ -49,17 +53,19 @@ class Asteroid extends GameObject {
     checkForCollisions();
   }
 
+  //------------------------------------------------------------------------------------------------------------------------
+
   void checkForCollisions() {
     int i = 0;
     while (i < objects.size()) {
       GameObject obj = objects.get(i);
 
-      // Check collision with bullets
+      //Check for Collision Between Asteroids and Bullets
       if (obj instanceof Bullet) {
         Bullet bullet = (Bullet)obj;
 
-        if (circleRect(location.x, location.y, diameter/2, obj.location.x, obj.location.y, obj.diameter*3, obj.diameter)) {
-          // Split asteroid if it's not the smallest size
+        if (circleRect(location.x, location.y, diameter/2, obj.location.x, obj.location.y, 30, 15)) {
+          //Split asteroid if it's not the smallest size
           if (lives > 1) {
             objects.add(new Asteroid(location.x, location.y, lives-1, bullet));
             objects.add(new Asteroid(location.x, location.y, lives-1, bullet));

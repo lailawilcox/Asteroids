@@ -1,11 +1,13 @@
 class GameObject {
 
+  //Instance Variables
   PVector location;
   PVector velocity;
   PVector direction;
   int lives;
   float diameter;
 
+  //Constructors
   //empty
   GameObject() {
     lives = 1;
