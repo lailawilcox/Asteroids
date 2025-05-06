@@ -40,7 +40,7 @@ void youLoseText() {
 }
 
 void restartButton() {
-  textSize(50);
+  textSize(30);
   stroke(white);
   noFill();
   drawSquareButton(width/2, height/2+50, 250, 80, 15, 6, 3);

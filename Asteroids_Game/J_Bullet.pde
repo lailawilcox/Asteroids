@@ -28,20 +28,21 @@ class Bullet extends GameObject {
       image(SpaceShipBullet, 0, 0);
 
       //Debug collision box
-      noFill();
-      rect(0, 0, 30, 10);
+      //noFill();
+      //rect(0, 0, 30, 10);
     } else {
       image(UFOBullet, 0, 0);
 
       //Debug collision box
-      noFill();
-      rect(0, 0, 30, 25);
+      //noFill();
+      //rect(0, 0, 30, 25);
     }
     popMatrix();
   }
 
   void act() {
     location.add(velocity);
+    checkForCollisions();
 
     //Delet Bullet when it Goes Off the Screen
     if (location.x < 0 || location.x > width || location.y < 0 || location.y > height) {
@@ -65,14 +66,20 @@ class Bullet extends GameObject {
             Bullet ufoBullet = (Bullet)obj2;
 
             //Check for Collision
-            if (rectRect(playerBullet.location.x, playerBullet.location.y, 30, 10,
-              ufoBullet.location.x, ufoBullet.location.y, 30, 25)) {
+            if (rectRect(playerBullet.location.x, playerBullet.location.y, 30, 10, ufoBullet.location.x, ufoBullet.location.y, 30, 25)) {
               //Destroy Both Bullets
               playerBullet.lives = 0;
               ufoBullet.lives = 0;
+
+              //Particles
+              int p = 25;
+              while (p > 0) {
+                objects.add(new Particle(location.x, location.y, "gg"));
+                p--;
+              }
             }
           }
-          j++; 
+          j++;
         }
       }
       i++;

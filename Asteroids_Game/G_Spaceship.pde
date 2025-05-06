@@ -55,8 +55,8 @@ class Spaceship extends GameObject {
     popMatrix();
 
     //Debug collision box
-    noFill();
-    rect(0, 0, 80, 50);
+    //noFill();
+    //rect(0, 0, 80, 50);
   }
 
   void move() {
@@ -67,14 +67,16 @@ class Spaceship extends GameObject {
 
     if (upkey) {
       velocity.add(direction);
+      objects.add(new Particle(location.x, location.y));
       //Limit maximum speed
       if (velocity.mag() > 5) {
         velocity.setMag(5);
       }
     }
-    
+
     if (downkey) {
-      velocity.add(direction);
+      velocity.sub(direction);
+      objects.add(new Particle(location.x, location.y));
       //Limit maximum reverse speed (smaller than max forward speed)
       if (velocity.mag() < -3) {
         velocity.setMag(-3);
@@ -87,7 +89,7 @@ class Spaceship extends GameObject {
 
   void shoot () {
     cooldown--;
-    if (spacekey && cooldown <= 0 && invincibilityTimer <= 0) {
+    if (spacekey && cooldown <= 0) {
       objects.add(new Bullet());
       cooldown = 30;
     }
@@ -114,6 +116,13 @@ class Spaceship extends GameObject {
       if (obj instanceof Asteroid) {
         if (circleRect(obj.location.x, obj.location.y, obj.diameter/2, location.x, location.y, 40, 25) && invincibilityTimer <= 0) {
           loseLife();
+
+          //Particles
+          int p = 100;
+          while (p > 0) {
+            objects.add(new Particle(location.x, location.y, "go"));
+            p--;
+          }
         }
       }
 
@@ -122,6 +131,13 @@ class Spaceship extends GameObject {
         if (invincibilityTimer <= 0 && circleRect(obj.location.x, obj.location.y, obj.diameter/2, location.x, location.y, 40, 25)) {
           loseLife();
           obj.lives = 0;
+
+          //Particles
+          int p = 100;
+          while (p > 0) {
+            objects.add(new Particle(location.x, location.y, "g"));
+            p--;
+          }
         }
       }
 
@@ -132,6 +148,13 @@ class Spaceship extends GameObject {
           score += 500;
           loseLife();
           obj.lives = 0;
+          
+          //Particles
+          int p = 50;
+          while (p > 0) {
+            objects.add(new Particle(location.x, location.y, "gg"));
+            p--;
+          }
         }
       }
       i++;

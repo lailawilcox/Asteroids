@@ -58,7 +58,7 @@ void setup() {
   UFOBullet.resize(35, 35);
 
   //Load Fonts
-  Font = createFont("Font", 40);
+  Font = createFont("Font.ttf", 40);
 
   //Initialize Game
   initializeGame();

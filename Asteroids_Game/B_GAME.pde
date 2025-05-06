@@ -58,7 +58,7 @@ void gameEngine() {
     rect(70, 35, 100, 30, 2);
     fill(white);
     textFont(Font);
-    textSize(20);
+    textSize(11);
     text("Lives: " + player1.lives, 70, 35);
   }
 
@@ -81,6 +81,6 @@ void gameEngine() {
     rect(width/2, 35, 100+w, 30, 2);
     fill(white);
     textFont(Font);
-    textSize(20);
+    textSize(11);
     text("Score: " + score, width/2, 35);
   }

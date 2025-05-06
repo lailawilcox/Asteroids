@@ -25,19 +25,19 @@ void introText() {
   //High score
   stroke(white);
   fill(white);
-  textSize(25);
+  textSize(20);
   text("High Score: " + highScore, width/2, height/3 + 170);
 
   //Instructions
   stroke(white);
   fill(white);
-  textSize(20);
+  textSize(15);
   text("WASD or Arrow Keys to move", width/2, height*2/3+20);
   text("SPACE to shoot, Z to teleport", width/2, height*2/3 + 50);
 }
 
 void startGameButton() {
-  textSize(50);
+  textSize(40);
   stroke(white);
   noFill();
   drawSquareButton(width/2, height/2-20, 250, 80, 15, 6, 3);

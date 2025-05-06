@@ -73,9 +73,9 @@ class UFO extends GameObject {
     popMatrix();
 
     //Debug collision circle
-    noFill();
-    stroke(white);
-    circle(location.x, location.y, diameter);
+    //noFill();
+    //stroke(white);
+    //circle(location.x, location.y, diameter);
   }
 
   void act() {
@@ -115,7 +115,7 @@ class UFO extends GameObject {
 
   void shoot() {
     PVector bulletDirection = new PVector(cos(angle), sin(angle));
-    objects.add(new Bullet(this.location.copy(), bulletDirection));
+    objects.add(new Bullet(location.copy(), bulletDirection));
   }
 
   void checkForCollisions() {
@@ -138,6 +138,13 @@ class UFO extends GameObject {
 
           lives = 0;
           obj.lives = 0;
+          
+          //Particles
+          int p = 50;
+          while (p > 0) {
+            objects.add(new Particle(location.x, location.y, "g"));
+            p--;
+          }
         }
       }
       i++;

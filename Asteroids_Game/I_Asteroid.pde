@@ -43,8 +43,8 @@ class Asteroid extends GameObject {
     angle += rotationSpeed;
 
     //Debug collision circle
-    noFill();
-    circle(location.x, location.y, diameter);
+    //noFill();
+    //circle(location.x, location.y, diameter);
   }
 
   void act() {
@@ -75,6 +75,13 @@ class Asteroid extends GameObject {
 
           lives = 0;
           obj.lives = 0;
+
+          //Particles
+          float p = 0.5*diameter;
+          while (p > 0) {
+            objects.add(new Particle(location.x, location.y, "go"));
+            p--;
+          }
         }
       }
       i++;

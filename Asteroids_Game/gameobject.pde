@@ -13,7 +13,7 @@ class GameObject {
     lives = 1;
   }
 
-  //Asteroids
+  //Asteroids and Particles
   GameObject(float lx, float ly, float vx, float vy) {
     location = new PVector(lx, ly);
     velocity = new PVector(vx, vy);
