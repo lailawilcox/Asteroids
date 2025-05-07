@@ -26,10 +26,10 @@ void youLoseText() {
   stroke(white);
   fill(white);
   textSize(30);
-  if (objects.size() == 1) {
-    text("You Sucessfully Destroyed all the Asteroids and Enemy Ships", width/2, height/2-50, 600, 500);
-  } else if (player1.lives == 0) {
+  if (player1.lives == 0) {
     text("Your Ship Was Destroyed", width/2, height/2-50);
+  } else {
+    text("You Sucessfully Destroyed all the Asteroids and Enemy Ships", width/2, height/2-50, 950, 500);
   }
 
   //High score

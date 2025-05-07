@@ -91,7 +91,26 @@ class Spaceship extends GameObject {
 
     if (upkey) {
       velocity.add(direction);
-      objects.add(new Particle(location.x, location.y));
+      
+      //Right Thruster
+      PVector offsetxr = direction.copy();
+      PVector offsetyr = direction.copy();
+      offsetxr.rotate(PI);
+      offsetxr.setMag(40);
+      offsetyr.rotate(PI/2);
+      offsetyr.setMag(18);
+      objects.add(new Particle(location.x + offsetxr.x + offsetyr.x, location.y + offsetxr.y  + offsetyr.y));
+     
+      //Left Thruster
+      PVector offsetxl = direction.copy();
+      PVector offsetyl = direction.copy();
+      offsetxl.rotate(PI);
+      offsetxl.setMag(40);
+      offsetyl.rotate(PI/2);
+      offsetyl.setMag(-18);
+      objects.add(new Particle(location.x + offsetxl.x + offsetyl.x, location.y + offsetxl.y + offsetyl.y));
+     
+      
       //Limit maximum speed
       if (velocity.mag() > 5) {
         velocity.setMag(5);
@@ -100,7 +119,13 @@ class Spaceship extends GameObject {
 
     if (downkey) {
       velocity.sub(direction);
-      objects.add(new Particle(location.x, location.y));
+      
+       //Center Thruster
+      PVector offset = direction.copy();
+      offset.rotate(PI);
+      offset.setMag(40);
+      objects.add(new Particle(location.x + offset.x, location.y + offset.y));
+      
       //Limit maximum reverse speed (smaller than max forward speed)
       if (velocity.mag() < -3) {
         velocity.setMag(-3);

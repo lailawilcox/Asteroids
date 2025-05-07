@@ -1,5 +1,9 @@
 void mouseReleased () {
   if (mode == INTRO) introClicks();
+  else if (mode == SHOP) shopClicks();
+  else if (mode == SHOPshield) shopShieldClicks();
+  else if (mode == SHOPteleport) shopTeleportClicks();
+  else if (mode == SHOPfreeze) shopFreezeClicks();
   else if (mode == GAME) gameClicks();
   else if (mode == PAUSE) pauseClicks();
   else if (mode == GAMEOVER) gameOverClicks();

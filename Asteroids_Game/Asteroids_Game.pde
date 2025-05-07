@@ -24,9 +24,13 @@ PFont Font;
 //Mode Framework
 int mode;
 final int INTRO = 0;
-final int GAME = 1;
-final int PAUSE = 2;
-final int GAMEOVER = 3;
+final int SHOP = 1;
+final int SHOPshield = 12;
+final int SHOPteleport = 13;
+final int SHOPfreeze = 14;
+final int GAME = 2;
+final int PAUSE = 3;
+final int GAMEOVER = 4;
 
 //keyboard
 boolean upkey, downkey, leftkey, rightkey, spacekey, oneKey, twoKey, threeKey;
@@ -41,7 +45,7 @@ ArrayList<GameObject> objects;
 //Game variables
 int score;
 int highScore = 0;
-int initialAsteroids = 4;
+int initialAsteroids = 1;
 int ufoTimer;
 
 void setup() {
@@ -76,8 +80,12 @@ void setup() {
   initializeGame();
 }
 
-void draw() {
+  void draw() {
   if (mode == INTRO) intro();
+  else if (mode == SHOP) shop();
+  else if (mode == SHOPshield) shopShield();
+  else if (mode == SHOPteleport) shopTeleport();
+  else if (mode == SHOPfreeze) shopFreeze();
   else if (mode == GAME) game();
   else if (mode == PAUSE) pause();
   else if (mode == GAMEOVER) gameOver();

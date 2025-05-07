@@ -13,7 +13,7 @@ class Particle extends GameObject {
     super(x, y, 0, 0);
 
     PVector thrustDir = player1.direction.copy().mult(-1);
-    thrustDir.rotate(random(-0.5, 0.5));
+    thrustDir.rotate(random(-5, 5));
     velocity = thrustDir.mult(random(1, 3));
     transparency = 255;
     diameter = random(2, 10);
@@ -21,7 +21,7 @@ class Particle extends GameObject {
 
     //red, orange, yellow colours
     r = 250;
-    g = random(0, 255);
+    g = random(100, 230);
     b = 0;
   }
 

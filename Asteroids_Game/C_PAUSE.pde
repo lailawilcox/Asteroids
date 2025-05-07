@@ -9,12 +9,12 @@ void pause() {
 void pauseClicks() {
   //Resume Button
   if (mouseX < (width/2)+250/2 && mouseX > (width/2)-250/2 && mouseY < (height/2-50)+70/2 && mouseY > (height/2-50)-70/2) {
-    mode = GAME;
+    mode = 2;
   }
 
   //Intro Button
   if (mouseX < (width/2)+200/2 && mouseX > (width/2)-200/2 && mouseY < (height/2+50)+70/2 && mouseY > (height/2+50)-70/2) {
-    mode = INTRO;
+    mode = 0;
   }
 }
 
