@@ -1,15 +1,31 @@
 class Spaceship extends GameObject {
 
   //Instance Variables
-  int cooldown;
+  //Shooting Variables
+  int shootingCooldown;
+
+  //Invincibility Variable
   int invincibilityTimer;
+
+  //PowerUp Variables
+  int teleportTimer;
+  int shieldTimer;
+  boolean shieldActive;
+  Shield activeShield;
+  int freezeTimer;
+  int freezeTime;
 
   //Constructor
   Spaceship() {
     super(width/2, height/2, 0, 0, 0.1, 0);
     direction = new PVector(0.1, 0);
-    cooldown = 0;
+    shootingCooldown = 0;
     invincibilityTimer = 0;
+    teleportTimer = 0;
+    shieldTimer = 0;
+    shieldActive = false;
+    freezeTimer = 0;
+    freezeTime = 0;
     diameter = 50;
     lives = 3;
   }
@@ -38,6 +54,14 @@ class Spaceship extends GameObject {
     checkForCollisions();
     wrapAround(50);
     invincibility();
+
+    //Power-Ups
+    teleport();
+    teleportBar();
+    shield();
+    shieldBar();
+    freeze();
+    freezeBar();
   }
 
   //------------------------------------------------------------------------------------------------------------------------
@@ -87,11 +111,11 @@ class Spaceship extends GameObject {
     if (rightkey) direction.rotate(radians(3));
   }
 
-  void shoot () {
-    cooldown--;
-    if (spacekey && cooldown <= 0) {
+  void shoot() {
+    shootingCooldown--;
+    if (spacekey && shootingCooldown <= 0) {
       objects.add(new Bullet());
-      cooldown = 30;
+      shootingCooldown = 30;
     }
   }
 
@@ -106,6 +130,167 @@ class Spaceship extends GameObject {
     invincibilityTimer = 200;
   }
 
+  //------------------------------------------------------------------------------------------------------------------------
+
+  void teleport() {
+    if (twoKey && teleportTimer <= 0) {
+
+      // Create Particles for Teleport at Old Location
+      for (int i = 0; i < 25; i++) {
+        objects.add(new Particle(location.x, location.y, "purple"));
+      }
+
+      boolean safePositionFound = false;
+      int attempts = 0;
+      int maxAttempts = 100;
+
+      float newX = 0;
+      float newY = 0;
+
+      while (!safePositionFound && attempts < maxAttempts) {
+        attempts++;
+
+        newX = random(0, width);
+        newY = random(0, height);
+
+        safePositionFound = true;
+
+        if (dist(location.x, location.y, newX, newY) < diameter/2 + 200) {
+          safePositionFound = false;
+        }
+
+        //Check Distance Between Spaceship and Edge
+        if (newX < 100 || newX > width-100 || newY < 100 || newY > height-100)safePositionFound = false;
+
+        int i = 0;
+        while (i < objects.size()) {
+          GameObject obj = objects.get(i);
+
+          if (obj instanceof Asteroid) {
+            //Check Distance Between Spaceship and Asteroids
+            if (circleRect(obj.location.x, obj.location.y, obj.diameter/2, newX, newY, 140, 125)) {
+              safePositionFound = false;
+            }
+          } else if (obj instanceof UFO) {
+            //Check Distance Between Spaceship and UFO
+            if (circleRect(obj.location.x, obj.location.y, obj.diameter/2, newX, newY, 140, 125)) {
+              safePositionFound = false;
+            }
+          } else if (obj instanceof Bullet && ((Bullet)obj).isFromUFO) {
+            //Check Distance Between Spaceship and UFO bullets
+            if (rectRect(obj.location.x, obj.location.y, 30, 25, newX, newY, 140, 125)) {
+              safePositionFound = false;
+            }
+          }
+          i++;
+        }
+      }
+
+      if (safePositionFound) {
+        location.x = newX;
+        location.y = newY;
+
+        // Create Particles for Teleport at New Location
+        for (int i = 0; i < 50; i++) {
+          objects.add(new Particle(location.x, location.y, "purple"));
+        }
+      }
+
+      teleportTimer = 1000;
+    }
+  }
+
+
+  void teleportBar() {
+    if (teleportTimer >= 0) {
+      teleportTimer--;
+
+      noStroke();
+      fill(purple, 200);
+      rectMode(CORNER);
+      rect(width/2-80, height-38, 200-(teleportTimer/5), 20);
+      rectMode(CENTER);
+    } else {
+      noStroke();
+      fill(purple);
+      rectMode(CORNER);
+      rect(width/2-80, height-38, 200, 20);
+      rectMode(CENTER);
+    }
+  }
+
+  //------------------------------------------------------------------------------------------------------------------------
+
+  void shield() {
+    if (oneKey && shieldTimer <= 0) {
+      shieldActive = true;
+      activeShield = new Shield();
+      objects.add(activeShield);
+      shieldTimer = 600;
+    }
+
+    boolean foundShield = false;
+    for (GameObject obj : objects) {
+      if (obj instanceof Shield) {
+        foundShield = true;
+      }
+    }
+    shieldActive = foundShield;
+  }
+
+
+  void shieldBar() {
+    if (shieldTimer >= 0 && !shieldActive) {
+      shieldTimer--;
+
+      noStroke();
+      fill(blue, 200);
+      rectMode(CORNER);
+      rect(width/2-380, height-38, 200-(shieldTimer/3), 20);
+      rectMode(CENTER);
+    } else if (!shieldActive) {
+      noStroke();
+      fill(blue);
+      rectMode(CORNER);
+      rect(width/2-380, height-38, 200, 20);
+      rectMode(CENTER);
+    }
+  }
+
+  //------------------------------------------------------------------------------------------------------------------------
+
+  void freeze() {
+    if (threeKey && freezeTimer <= 0) {
+      freezeTime = 150;
+      freezeTimer = 1400;
+    }
+  }
+
+
+  void freezeBar() {
+    if (freezeTime > 0) {
+      freezeTime--;
+    }
+    if (freezeTimer > 0 && freezeTime <= 0) {
+      // Only count down cooldown after freeze effect ends
+      freezeTimer--;
+    }
+    if (freezeTime > 0 || freezeTimer > 0) {
+      noStroke();
+      fill(lblue, 200);
+      rectMode(CORNER);
+      rect(width/2+220, height-38, 200-(freezeTimer/7), 20);
+      rectMode(CENTER);
+    } else {
+      noStroke();
+      fill(lblue);
+      rectMode(CORNER);
+      rect(width/2+220, height-38, 200, 20);
+      rectMode(CENTER);
+    }
+  }
+
+  //------------------------------------------------------------------------------------------------------------------------
 
   void checkForCollisions() {
     int i = 0;
@@ -114,29 +299,29 @@ class Spaceship extends GameObject {
 
       //Check for Collision Between Spaceship and Asteroids
       if (obj instanceof Asteroid) {
-        if (circleRect(obj.location.x, obj.location.y, obj.diameter/2, location.x, location.y, 40, 25) && invincibilityTimer <= 0) {
+        Asteroid asteroid = (Asteroid)obj;
+        if (!shieldActive && circleRect(obj.location.x, obj.location.y, obj.diameter/2, location.x, location.y, 40, 25) && invincibilityTimer <= 0) {
           loseLife();
+          asteroid.velocity.mult(-1);
 
           //Particles
-          int p = 100;
-          while (p > 0) {
-            objects.add(new Particle(location.x, location.y, "go"));
-            p--;
+          for (int p = 0; p < 100; p++) {
+            objects.add(new Particle(location.x, location.y, "greyOrange"));
           }
         }
       }
 
       //Check for Collisions Between Spaceship and UFO
       if (obj instanceof UFO) {
-        if (invincibilityTimer <= 0 && circleRect(obj.location.x, obj.location.y, obj.diameter/2, location.x, location.y, 40, 25)) {
+        if (invincibilityTimer <= 0 && !shieldActive && circleRect(obj.location.x, obj.location.y, obj.diameter/2, location.x, location.y, 40, 25)) {
           loseLife();
           obj.lives = 0;
 
+          score += 500;
+
           //Particles
-          int p = 100;
-          while (p > 0) {
-            objects.add(new Particle(location.x, location.y, "g"));
-            p--;
+          for (int p = 0; p < 100; p++) {
+            objects.add(new Particle(location.x, location.y, "grey"));
           }
         }
       }
@@ -144,16 +329,14 @@ class Spaceship extends GameObject {
       //Check for Collisions Between Spaceship and UFO bullets
       if (obj instanceof Bullet) {
         Bullet bullet = (Bullet)obj;
-        if (bullet.isFromUFO && invincibilityTimer <= 0 && rectRect(obj.location.x, obj.location.y, 30, 25, location.x, location.y, 40, 25)) {
+        if (bullet.isFromUFO && invincibilityTimer <= 0 && !shieldActive && rectRect(obj.location.x, obj.location.y, 30, 25, location.x, location.y, 40, 25)) {
           score += 500;
           loseLife();
           obj.lives = 0;
-          
+
           //Particles
-          int p = 50;
-          while (p > 0) {
-            objects.add(new Particle(location.x, location.y, "gg"));
-            p--;
+          for (int p = 0; p < 50; p++) {
+            objects.add(new Particle(location.x, location.y, "greyGreen"));
           }
         }
       }

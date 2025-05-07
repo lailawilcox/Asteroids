@@ -6,6 +6,7 @@ void mouseReleased () {
 }
 
 void keyPressed() {
+  //Move
   if (key == 'w' || key == 'W') upkey  = true;
   if (key == 's' || key == 'S') downkey  = true;
   if (key == 'a' || key == 'A') leftkey  = true;
@@ -16,11 +17,19 @@ void keyPressed() {
   if (keyCode == LEFT) leftkey = true;
   if (keyCode == RIGHT) rightkey= true;
 
-  if (key == 'z' || key == 'Z') zkey = true;
+  //Shoot
   if (key == ' ') spacekey = true;
+
+  //Shield
+  if (key == '1' || key == '!') oneKey = true;
+  //Teleport
+  if (key == '2' || key == '@') twoKey = true;
+  //Freeze
+  if (key == '3' || key == '#') threeKey = true;
 }
 
 void keyReleased() {
+  //Move
   if (key == 'w' || key == 'W') upkey  = false;
   if (key == 's' || key == 'S') downkey  = false;
   if (key == 'a' || key == 'A') leftkey  = false;
@@ -31,6 +40,13 @@ void keyReleased() {
   if (keyCode == LEFT) leftkey = false;
   if (keyCode == RIGHT) rightkey= false;
 
-  if (key == 'z' || key == 'Z') zkey = false;
+  //Shoot
   if (key == ' ') spacekey = false;
+
+  //Shield
+  if (key == '1' || key == '!') oneKey = false;
+  //Teleport
+  if (key == '2' || key == '@') twoKey = false;
+  //Freeze
+  if (key == '3' || key == '#') threeKey = false;
 }

@@ -40,7 +40,6 @@ class Asteroid extends GameObject {
     scale(0.1 * lives); // Scale based on size
     image(Asteroid, 0, 0);
     popMatrix();
-    angle += rotationSpeed;
 
     //Debug collision circle
     //noFill();
@@ -48,8 +47,16 @@ class Asteroid extends GameObject {
   }
 
   void act() {
-    location.add(velocity);
-    wrapAround(diameter/2);
+    if (!shouldFreeze()) {
+      location.add(velocity);
+      wrapAround(diameter/2);
+      angle += rotationSpeed;
+    } else {
+      //Particles
+      for (int p = 0; p < 5; p++) {
+        objects.add(new Particle(location.x, location.y, "lightBlue"));
+      }
+    }
     checkForCollisions();
   }
 
@@ -71,7 +78,9 @@ class Asteroid extends GameObject {
             objects.add(new Asteroid(location.x, location.y, lives-1, bullet));
           }
 
-          score += (4 - lives) * 100;
+          if (!bullet.isFromUFO) {
+            score += (4 - lives) * 100;
+          }
 
           lives = 0;
           obj.lives = 0;
@@ -79,7 +88,11 @@ class Asteroid extends GameObject {
           //Particles
           float p = 0.5*diameter;
           while (p > 0) {
-            objects.add(new Particle(location.x, location.y, "go"));
+            if (!bullet.isFromUFO) {
+              objects.add(new Particle(location.x, location.y, "greyOrange"));
+            } else {
+              objects.add(new Particle(location.x, location.y, "greenOrange"));
+            }
             p--;
           }
         }

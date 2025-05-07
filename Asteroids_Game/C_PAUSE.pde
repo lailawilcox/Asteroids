@@ -35,13 +35,13 @@ void transparentBackground() {
 void pauseText() {
   textFont(Font);
   fill(white);
-  textSize(80);
+  textSize(70);
   text("PAUSED", width/2, height/3);
 }
 
 
 void resumeButton() {
-  textSize(40);
+  textSize(30);
   fill(black, 200);
   stroke(white);
   drawSquareButton(width/2, height/2-50, 250, 70, 10, 4, 2);

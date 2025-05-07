@@ -79,16 +79,25 @@ class UFO extends GameObject {
   }
 
   void act() {
-    move();
-    updateAngle();
-    checkForCollisions();
+    if (!shouldFreeze()) {
+      move();
+      updateAngle();
 
-    cooldown--;
-    if (cooldown <= 0) {
-      shoot();
-      cooldown = int(random(60, 120));
+
+      cooldown--;
+      if (cooldown <= 0) {
+        shoot();
+        cooldown = int(random(50, 200));
+      }
+    } else {
+      //Particles
+      for (int p = 0; p < 5; p++) {
+        objects.add(new Particle(location.x, location.y, "lightBlue"));
+      }
     }
+    checkForCollisions();
   }
+
 
   //------------------------------------------------------------------------------------------------------------------------
 
@@ -118,6 +127,8 @@ class UFO extends GameObject {
     objects.add(new Bullet(location.copy(), bulletDirection));
   }
 
+  //------------------------------------------------------------------------------------------------------------------------
+
   void checkForCollisions() {
     int i = 0;
     while (i < objects.size()) {
@@ -138,12 +149,10 @@ class UFO extends GameObject {
 
           lives = 0;
           obj.lives = 0;
-          
+
           //Particles
-          int p = 50;
-          while (p > 0) {
-            objects.add(new Particle(location.x, location.y, "g"));
-            p--;
+          for (int p = 0; p < 50; p++) {
+            objects.add(new Particle(location.x, location.y, "grey"));
           }
         }
       }

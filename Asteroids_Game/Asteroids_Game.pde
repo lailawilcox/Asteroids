@@ -3,6 +3,9 @@
 //Pallet
 color black = #000000;
 color white = #FFFFFF;
+color purple = #9B35C1;
+color blue = #2062E3;
+color lblue = #A2D9FA;
 
 //images
 PImage Background;
@@ -11,6 +14,9 @@ PImage SpaceShipBullet;
 PImage Asteroid;
 PImage UFO;
 PImage UFOBullet;
+PImage Teleport;
+PImage Shield;
+PImage SnowFlake;
 
 //Fonts
 PFont Font;
@@ -23,7 +29,7 @@ final int PAUSE = 2;
 final int GAMEOVER = 3;
 
 //keyboard
-boolean upkey, downkey, leftkey, rightkey, spacekey, zkey;
+boolean upkey, downkey, leftkey, rightkey, spacekey, oneKey, twoKey, threeKey;
 
 //Game Objects
 Spaceship player1;
@@ -56,6 +62,12 @@ void setup() {
   UFO.resize(100, 100);
   UFOBullet = loadImage("UFOBullet.png");
   UFOBullet.resize(35, 35);
+  Teleport = loadImage("Teleport.png");
+  Teleport.resize(30, 30);
+  Shield = loadImage("Shield.png");
+  Shield.resize(30, 30);
+  SnowFlake = loadImage("SnowFlake.png");
+  SnowFlake.resize(37, 30);
 
   //Load Fonts
   Font = createFont("Font.ttf", 40);

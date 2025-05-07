@@ -41,7 +41,15 @@ class Bullet extends GameObject {
   }
 
   void act() {
-    location.add(velocity);
+    if (!shouldFreeze()) {
+      location.add(velocity);
+    } else {
+      //Particles
+      for (int p = 0; p < 5; p++) {
+        objects.add(new Particle(location.x, location.y, "lightBlue"));
+      }
+    }
+
     checkForCollisions();
 
     //Delet Bullet when it Goes Off the Screen
@@ -49,6 +57,8 @@ class Bullet extends GameObject {
       lives = 0;
     }
   }
+
+  //------------------------------------------------------------------------------------------------------------------------
 
   void checkForCollisions() {
     //Loop Through Objects and Find Player Bullets
@@ -65,17 +75,15 @@ class Bullet extends GameObject {
           if (obj2 instanceof Bullet && ((Bullet)obj2).isFromUFO) {
             Bullet ufoBullet = (Bullet)obj2;
 
-            //Check for Collision
+            //Check for Collision Between Player Bullet and UFO Bullet
             if (rectRect(playerBullet.location.x, playerBullet.location.y, 30, 10, ufoBullet.location.x, ufoBullet.location.y, 30, 25)) {
               //Destroy Both Bullets
               playerBullet.lives = 0;
               ufoBullet.lives = 0;
 
               //Particles
-              int p = 25;
-              while (p > 0) {
-                objects.add(new Particle(location.x, location.y, "gg"));
-                p--;
+              for (int p = 0; p < 25; p++) {
+                objects.add(new Particle(location.x, location.y, "greyGreen"));
               }
             }
           }

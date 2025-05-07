@@ -36,6 +36,12 @@ class GameObject {
     lives = 1;
   }
 
+  //Shield
+  GameObject(int l, float d) {
+    lives = l;
+    diameter = d;
+  }
+
   void act() {
   }
 
@@ -47,5 +53,12 @@ class GameObject {
     if (location.x > width+add) location.x = 0-add;
     if (location.y < 0-add) location.y = height+add;
     if (location.y > height+add) location.y = 0-add;
+  }
+
+  boolean shouldFreeze() {
+    if (player1.freezeTime > 0 && !(this instanceof Spaceship) && !(this instanceof Bullet && !((Bullet)this).isFromUFO)) {
+      return true;
+    }
+    return false;
   }
 }
