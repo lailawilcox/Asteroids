@@ -6,6 +6,8 @@ color white = #FFFFFF;
 color purple = #9B35C1;
 color blue = #2062E3;
 color lblue = #A2D9FA;
+color green = #29AF49;
+color dgreen = #1B7430;
 
 //images
 PImage Background;
@@ -25,9 +27,9 @@ PFont Font;
 int mode;
 final int INTRO = 0;
 final int SHOP = 1;
-final int SHOPshield = 12;
-final int SHOPteleport = 13;
-final int SHOPfreeze = 14;
+final int SHOPshield = 11;
+final int SHOPteleport = 12;
+final int SHOPfreeze = 13;
 final int GAME = 2;
 final int PAUSE = 3;
 final int GAMEOVER = 4;
@@ -80,7 +82,7 @@ void setup() {
   initializeGame();
 }
 
-  void draw() {
+void draw() {
   if (mode == INTRO) intro();
   else if (mode == SHOP) shop();
   else if (mode == SHOPshield) shopShield();

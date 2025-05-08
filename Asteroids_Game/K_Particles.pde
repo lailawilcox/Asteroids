@@ -17,12 +17,13 @@ class Particle extends GameObject {
     velocity = thrustDir.mult(random(1, 3));
     transparency = 255;
     diameter = random(2, 10);
-    particleColour = color(255, random(0, 255), 0, transparency);
 
     //red, orange, yellow colours
     r = 250;
     g = random(100, 230);
     b = 0;
+
+    particleColour = color(r, g, b, transparency);
   }
 
   //Explosion particle
